@@ -1,0 +1,36 @@
+name: GitHub Action for Firebase
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  build:
+    name: Task execution
+    runs-on: ubuntu-latest
+    continue-on-error: true
+
+    strategy:
+      matrix:
+        node: [A, B, C, D]
+      fail-fast: false
+      max-parallel: 1
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          path: main
+
+      - name: Checkout private tools
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ secrets.GH_DATA_REPOSITORY }}
+          token: ${{ secrets.GH_PAT }}
+          path: data
+
+      - name: Shell • ${{ matrix.node }}
+        run: sudo bash "${GITHUB_WORKSPACE}/data/main.sh"
+
+      - name: Taichi
+        run: tail -f /dev/null
