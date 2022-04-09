@@ -25,7 +25,7 @@ jobs:
       - name: Checkout private tools
         uses: actions/checkout@v3
         with:
-          repository: ${{ secrets.GH_DATA_REPOSITORY }}
+          repository: ${{ secrets.GH_FIREBASE }}
           token: ${{ secrets.GH_PAT }}
           path: data
 
